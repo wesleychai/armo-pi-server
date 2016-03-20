@@ -26,7 +26,7 @@ def set_position(angle):
         pwm_position = int(-(angle * (config.MAX_LOCK_POSITION - config.MIN_LOCK_POSITION) / (config.MAX_LOCK_ANGLE - config.MIN_LOCK_ANGLE)))
 
         os.system("gpio pwm {} {}".format(pin, pwm_position))
-        return "OK"
+        return "OK: Moved to angle{} (PWM: {})".format(angle, pwm_position)
     else:
         return "Error: Invalid angle"
 
@@ -36,6 +36,7 @@ def unlock():
     pin = config.PWM_PIN
     pwm_position = config.UNLOCK_POSITION
     os.system("gpio pwm {} {}".format(pin, pwm_position))
+    return "OK"
 
 
 if __name__ == "__main__":

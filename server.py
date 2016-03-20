@@ -9,7 +9,7 @@ app = Flask("armo-server")
 
 
 def validate_angle(angle):
-    return angle >= config.MIN_LOCK_ANGLE and angle <= MIN_LOCK_ANGLE
+    return angle >= config.MIN_LOCK_ANGLE and angle <= MAX_LOCK_ANGLE
 
 
 @app.route("/")

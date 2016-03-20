@@ -25,7 +25,6 @@ def set_position(angle):
         pin = config.PWM_PIN
 
         pwm_position = int(config.MIN_LOCK_POSITION + (((angle - config.MIN_LOCK_ANGLE) * (config.MAX_LOCK_POSITION - config.MIN_LOCK_POSITION) / (config.MAX_LOCK_ANGLE - config.MIN_LOCK_ANGLE)))) 
-        pwm_position = pwm_position - 1 # For offset caused by rounding
 
         os.system("gpio pwm {} {}".format(pin, pwm_position))
         return "OK: Moved to angle{} (PWM: {})".format(angle, pwm_position)

@@ -23,7 +23,7 @@ def set_position(angle):
     angle = int(angle)
     if validate_angle(angle):
         pin = config.PWM_PIN
-        pwm_position = int(MIN_LOCK_ANGLE - (angle * (config.MAX_LOCK_POSITION - config.MIN_LOCK_POSITION) / (MAX_LOCK_ANGLE - MIN_LOCK_ANGLE)))
+        pwm_position = int(config.MIN_LOCK_ANGLE - (angle * (config.MAX_LOCK_POSITION - config.MIN_LOCK_POSITION) / (config.MAX_LOCK_ANGLE - config.MIN_LOCK_ANGLE)))
 
         os.system("gpio pwm {} {}".format(pin, pwm_position))
         return "OK"

@@ -26,7 +26,7 @@ def set_position(angle):
 
         pwm_position = int(config.MIN_LOCK_POSITION + (((angle - config.MIN_LOCK_ANGLE) * (config.MAX_LOCK_POSITION - config.MIN_LOCK_POSITION) / (config.MAX_LOCK_ANGLE - config.MIN_LOCK_ANGLE)))) 
 
-        os.system("gpio pwm {} {}".format(pin, pwm_position))
+        os.system("/usr/local/bin/gpio pwm {} {}".format(pin, pwm_position))
         return "OK: Moved to angle{} (PWM: {})".format(angle, pwm_position)
     else:
         return "Error: Invalid angle"
@@ -36,25 +36,26 @@ def set_position(angle):
 def unlock():
     pin = config.PWM_PIN
     pwm_position = config.UNLOCK_POSITION
-    os.system("gpio pwm {} {}".format(pin, pwm_position))
+    os.system("/usr/local/bin/gpio pwm {} {}".format(pin, pwm_position))
     return "OK"
 
 @app.route("/reset")
 def reset():
-    os.system("gpio mode 1 pwm")
-    os.system("gpio pwm-ms")
-    os.system("gpio pwmc 400")
-    os.system("gpio pwmr 1000")
+    os.system("/usr/local/bin/gpio mode 1 pwm")
+    os.system("/usr/local/bin/gpio pwm-ms")
+    os.system("/usr/local/bin/gpio pwmc 400")
+    os.system("/usr/local/bin/gpio pwmr 1000")
     return "DONE"
 
 if __name__ == "__main__":
-    os.system("gpio mode 1 pwm")
-    os.system("gpio pwm-ms")
-    os.system("gpio pwmc 400")
-    os.system("gpio pwmr 1000")
+    os.system("/usr/local/bin/gpio mode 1 pwm")
+    os.system("/usr/local/bin/gpio pwm-ms")
+    os.system("/usr/local/bin/gpio pwmc 400")
+    os.system("/usr/local/bin/gpio pwmr 1000")
 
     #Put into unlock position
     pin = config.PWM_PIN
     pwm_position = config.UNLOCK_POSITION
-    os.system("gpio pwm {} {}".format(pin, pwm_position))
+    os.system("/usr/local/bin/gpio pwm {} {}".format(pin, pwm_position))
+
     app.run(host="0.0.0.0")

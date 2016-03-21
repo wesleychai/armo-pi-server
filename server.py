@@ -1,6 +1,6 @@
 import config
 
-from flask import Flask
+from flask import Flask, render_template
 
 import os
 
@@ -15,7 +15,7 @@ def validate_angle(angle):
 
 @app.route("/")
 def index():
-    return "Hello, World!"
+    return render_template("index.html")
 
 
 @app.route("/position/<angle>")

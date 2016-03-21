@@ -1,0 +1,18 @@
+<link rel="stylesheet" href="circular-slider.min.css" />
+<script src="jquery.js"></script>
+<script src="circular-slider.min.js"></script>
+
+
+<div id="slider">
+<script>$(document).ready(function(){
+
+var handleSlide = function(ui, value) {
+    alert("SLIDE TO: " + value);
+}
+
+var slider = $('#slider').CircularSlider({
+    slide: handleSlide,
+});
+
+});</script>
+</div>

@@ -2,9 +2,23 @@
 <html>
 <head>
 <link rel="stylesheet" href="/static/circular-slider.min.css" />
+<link rel="stylesheet" href="/static/bootstrap.min.css" />
 <script src="/static/jquery.js"></script>
 <script src="/static/circular-slider.min.js"></script>
 <style type="text/css">
+#slider {
+    margin: auto;
+    margin-bottom: 50px;
+}
+
+.container {
+    margin-top: 10px;
+}
+
+.left-space {
+    margin-left: 30px;
+}
+
 .jcs-panel {
     background-color: #6886C0;
 }
@@ -24,42 +38,75 @@
     border-color: #fff;
 }
 </style>
-</head>
-<body>
+<script>
+    var send_ok = true;
+    $(document).ready(function(){
+        var handleSlide = function(ui, value) {
+            if (value < 70) {
+                value = 70;
+                //Can't set the slider value from inside this closure
+            }
 
-<div id="slider">
-<script>$(document).ready(function(){
+            if (value > 180) {
+                value = 180;
+            }
 
-var send_ok = true;
+            if (send_ok == true) {
+                send_ok = false;
+                $.ajax({
+                    url: "/position/" + value,
+                }).done(function() {
+                    send_ok = true;
+                });
+            }
+        }
 
-var handleSlide = function(ui, value) {
-    if (value < 70) {
-        value = 70;
-        //Can't set the slider value from inside this closure
-    }
+        var slider = $('#slider').CircularSlider({
+            shape: "Half Circle",
+            slide: handleSlide,
+            min: 0,
+            max: 180,
+        });
 
-    if (value > 180) {
-        value = 180;
-    }
-
-    if (send_ok == true) {
-    send_ok = false;
-    $.ajax({
-        url: "/position/" + value,
-    }).done(function() {
-        send_ok = true;
     });
+
+function unlock() {
+    if (send_ok == true) {
+        send_ok = false;
+        $.ajax({
+            url: "/unlock",
+        }).done(function() {
+            send_ok = true;
+        });
     }
 }
 
-var slider = $('#slider').CircularSlider({
-    shape: "Half Circle",
-    slide: handleSlide,
-    min: 0,
-    max: 180,
-});
 
-});</script>
-</div>
+</script>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <img src="/static/logo.png" class="img-responsive"/>
+        </div>
+    </div>
+
+    <div class="row left-space">
+        <h1>Control panel</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-3 left-space">
+            <h2>Arm lock position</h2>
+            <div id="slider"></div>
+        </div>
+        <div class="col-md-3 left-space">
+            <h2>Unlock arm</h2>
+            <div>
+                <button class="btn btn-danger clear-fix" onclick="unlock()" style=""><h1>UNLOCK</h1></button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

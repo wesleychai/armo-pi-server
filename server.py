@@ -41,4 +41,8 @@ def unlock():
 
 
 if __name__ == "__main__":
+    os.system("gpio pwm-ms")
+    os.system("gpio mode 1 pwm")
+    os.system("gpio pwmc 400")
+    os.system("gpio pwmr 1000")
     app.run(host="0.0.0.0")

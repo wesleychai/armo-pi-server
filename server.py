@@ -39,12 +39,20 @@ def unlock():
     os.system("gpio pwm {} {}".format(pin, pwm_position))
     return "OK"
 
+@app.route("/reset")
+def reset():
+    os.system("gpio mode 1 pwm")
+    os.system("gpio pwm-ms")
+    os.system("gpio pwmc 400")
+    os.system("gpio pwmr 1000")
+    return "DONE"
 
 if __name__ == "__main__":
     os.system("gpio mode 1 pwm")
     os.system("gpio pwm-ms")
     os.system("gpio pwmc 400")
     os.system("gpio pwmr 1000")
+
     #Put into unlock position
     pin = config.PWM_PIN
     pwm_position = config.UNLOCK_POSITION

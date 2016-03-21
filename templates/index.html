@@ -82,6 +82,17 @@ function unlock() {
     }
 }
 
+function reset() {
+    if (send_ok == true) {
+        send_ok = false;
+        $.ajax({
+            url: "/reset",
+        }).done(function() {
+            send_ok = true;
+        });
+    }
+}
+
 
 </script>
 </head>
@@ -106,6 +117,12 @@ function unlock() {
             <h2>Unlock arm</h2>
             <div>
                 <button class="btn btn-danger clear-fix" onclick="unlock()" style=""><h1>UNLOCK</h1></button>
+            </div>
+        </div>
+        <div class="col-md-3 left-space">
+            <h2>Force GPIO reset</h2>
+            <div>
+                <button class="btn btn-warning clear-fix" onclick="reset()" style=""><h1>RESET</h1></button>
             </div>
         </div>
     </div>
